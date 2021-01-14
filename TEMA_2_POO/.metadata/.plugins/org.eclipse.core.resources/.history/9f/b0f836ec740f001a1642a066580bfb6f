@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+import java.util.List;
+
+/** @author Chirila Albert */
+public class Interval{
+	private int start_interval;
+	private int stop_interval;
+	private List<Double> list;
+	private int reference;
+	
+	/**
+	 * Constructor ce initializeaza lista de temperaturi
+	 * @param value timpul de referinta
+	 */
+	public Interval(int value) {
+		this.list = new ArrayList<Double>();
+	}
+	
+	public void setStart(int value) {
+		this.start_interval = value;
+	}
+	
+	public void setStop(int value) {
+		this.stop_interval = value;
+	}
+	
+	public int getStart() {
+		return this.start_interval;
+	}
+	
+	public int getStop() {
+		return this.stop_interval;
+	}
+	
+	public List<Double> getList() {
+		return this.list;
+	}
+}

@@ -1,0 +1,26 @@
+
+/** @author Chirila Albert */
+public class Beneficii {
+	private int points1;
+	private int points2;
+	
+	public Beneficii(boolean priority_embark, boolean special) {
+		if(priority_embark == true)
+			this.points1 = 30;
+		else
+			this.points1 = 0;
+		
+		if(special == true)
+			this.points2 = 100;
+		else
+			this.points2 = 0;
+	}
+	
+	public int getPoints1() {
+		return this.points1;
+	}
+	
+	public int getPoints2() {
+		return this.points2;
+	}
+}

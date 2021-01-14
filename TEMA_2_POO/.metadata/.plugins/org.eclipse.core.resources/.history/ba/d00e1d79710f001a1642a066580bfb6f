@@ -1,0 +1,17 @@
+import java.io.IOException;
+
+/** @author Chirila Albert */
+public class MainClass {
+
+	public static void main(String[] args) {
+		
+		ReadFile file = new ReadFile();
+		try {
+			file.read();
+		} catch (IOException e) {
+			System.out.println("Cannot read from file!");
+		}
+		
+	}
+
+}

@@ -1,0 +1,6 @@
+
+/** @author  Chirila Albert */
+public interface Clasament {
+	public void registerObserver(Team team);
+	public void notifyObserver();
+}

@@ -1,0 +1,15 @@
+/** @author Chirila Albert */
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class WriteFile {
+	
+	public void write(String s) throws IOException {
+		String file = "src/queue.out";
+		FileWriter fw = new FileWriter(file, true);
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(s);
+		bw.close();
+	}
+}

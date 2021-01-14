@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+import java.util.List;
+
+/** @author Chirila Albert */
+public class Device {
+	private List<Interval> list;
+	private String device_id;
+	
+	public Device(String value, int reference) {
+		this.list = new ArrayList<Interval>();
+		this.device_id = value;
+		make_list(reference);
+	}
+	
+	
+	public void make_list(int reference) {
+		for(int i = 24; i>=1; i--) {
+			Interval interval = new Interval(reference);
+			interval.setStart((reference - i*3600)+1);
+			interval.setStop((reference -(i-1)*3600));
+			this.list.add(interval);
+		}
+	}
+	
+	public List<Interval> getList(){
+		return this.list;
+	}
+	
+	public String getDevice_id() {
+		return this.device_id;
+	}
+}

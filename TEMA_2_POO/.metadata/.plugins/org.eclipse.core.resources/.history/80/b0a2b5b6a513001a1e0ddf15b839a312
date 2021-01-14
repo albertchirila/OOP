@@ -1,0 +1,70 @@
+import java.io.*;
+
+/** @author Chirila Albert */
+public class ReadFile {
+	
+	/** Metoda citeste din fisierul de input, prelucreaza datele si apeleaza comenzile
+	 * @throws IOException exceptie - daca nu se poate citi din fisier
+	 */
+	public void read() throws IOException {
+		int i, bonus=0;
+		String file = "src/therm.in";
+		new FileOutputStream("src/therm.out").close();
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String line = br.readLine();
+		String parts[] = line.split(" ");
+		
+		House house = new House();
+		
+		int rooms = Integer.parseInt(parts[0]); // nr camere
+		house.setTemp(Double.parseDouble(parts[1]));
+		
+		if(parts[2].length() > 5) {
+			for(i = 1; i<=rooms; i++) {
+				line = br.readLine();
+				String v[] = line.split(" ");
+				
+				Room room = new Room(v[0], v[1], Integer.parseInt(v[2]), Integer.parseInt(parts[2]));
+				house.getList().add(room);	
+			}
+		}
+		else {
+			house.setH(Double.parseDouble(parts[2]));
+			bonus = 1;
+			for(i = 1; i<=rooms; i++) {
+				line = br.readLine();
+				String v[] = line.split(" ");
+				
+				Room room = new Room(v[0], v[1], Integer.parseInt(v[2]), Integer.parseInt(parts[3]));
+				house.getList().add(room);	
+			}
+		}
+		
+		
+		while((line = br.readLine()) != null) {
+			String v[] = line.split(" ");
+			if(v[0].equals("TEMPERATURE")) {
+				house.setTemp(Double.parseDouble(v[1]));
+			}
+			
+			if(v[0].equals("OBSERVE")) {
+				house.observe(v[1], Integer.parseInt(v[2]), Double.parseDouble(v[3]));
+			}
+			
+			if(v[0].equals("OBSERVEH")) {
+				house.observe(v[1], Integer.parseInt(v[2]), Double.parseDouble(v[3]));
+			}
+			
+			if(v[0].equals("TRIGGER")) {
+				house.trigger_heat(bonus);
+			}
+			
+			if(v[0].equals("LIST")) {
+				house.list(v[1], Integer.parseInt(v[2]), Integer.parseInt(v[3]));
+			}
+		}
+		
+		
+		br.close();
+	}
+}

@@ -1,0 +1,22 @@
+/** @author Chirila Albert */
+public class Bilet {
+	/** valoare int specifica tipului de bilet */
+	private int points;
+	
+	
+	public Bilet(String type) {
+		if(type.equals("b")) {
+			this.points = 35;
+		}
+		if(type.equals("p")) {
+			this.points = 20;
+		}
+		if(type.equals("e")) {
+			this.points = 0;
+		}
+	}
+	
+	public int getPoints() {
+		return this.points;
+	}
+}

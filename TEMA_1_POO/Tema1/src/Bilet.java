@@ -1,0 +1,27 @@
+/** @author Chirila Albert */
+public class Bilet {
+	/** Valoare int specifica tipului de bilet */
+	private int points;
+	
+	/**
+	 * Constructorul seteaza punctele corespunzatoare tipului de bilet
+	 * @param type tipul de bilet
+	 */
+	public Bilet(String type) {
+		if(type.equals("b")) {
+			this.points = 35;
+		}
+		if(type.equals("p")) {
+			this.points = 20;
+		}
+		if(type.equals("e")) {
+			this.points = 0;
+		}
+	}
+	
+	/** Returneaza punctele specifice tipului de bilet
+	 * @return punctele specifice tipului de bilet */
+	public int getPoints() {
+		return this.points;
+	}
+}

@@ -1,0 +1,44 @@
+/** @author Chirila Albert */
+public class Pasager {
+	/** valoare int ce reprezinta prioritatea unui pasager */
+	private int total_points;
+	/** pasagerul(familie/grup/singur) este reprezentat printr-un vector de persoane */
+	private Persoana[] v;
+	/** valoare int ce reprezinta capacitatea vectorului */
+	private int capacity;
+	
+	/** constructor default */
+	public Pasager() {
+		
+	}
+	
+	/**
+	 * @param v vector de persoane
+	 * seteaza vectorul de persoane
+	 */
+	public void setVector(Persoana[] v) {
+		this.v = v;
+	}
+	
+	/** getter ce returneaza vectorul de persoane */
+	public Persoana[] getVector() {
+		return this.v;
+	}
+	
+	public void setTotal_Points(int x) {
+		this.total_points = x;
+	}
+	
+	public int getTotal_Points() {
+		return this.total_points;
+	}
+	
+	public void setCapacity(int value) {
+		this.capacity = value;
+	}
+	
+	public int getCapacity() {
+		return this.capacity;
+	}
+	
+}

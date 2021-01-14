@@ -1,0 +1,78 @@
+/** @author Chirila Albert */
+import java.io.*;
+
+public class ReadFile {
+	
+	/**
+	 * Metoda citeste din fisier fiecare linie si identifica fiecare cuvant pentru a rula comenzile
+	 * @throws IOException eroare la citirea din fisier
+	 */
+	public void read() throws IOException {	
+		
+		int i;
+		String file = "src/queue.in";
+		new FileOutputStream("src/queue.out").close();
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String line;
+		line = br.readLine();
+		int nr = Integer.parseInt(line); // nr pasageri
+		
+		PriorityQueue heap = new PriorityQueue(nr);
+		Vector vector = new Vector(nr);
+		
+		for(i=1; i<=nr; i++) {
+			line = br.readLine();
+			String[] parts = line.split(" ");
+			Persoana pers = new Persoana(parts[0], parts[1], Integer.parseInt(parts[2]) ,parts[3] , Boolean.parseBoolean(parts[4]), Boolean.parseBoolean(parts[5]));
+			vector.inserare(pers);
+			
+		}			
+		
+		while((line = br.readLine()) != null) {
+			String[] v = line.split(" ");
+			
+			if(v[0].equals("insert")) {
+				if(v[1].contains("f")) {
+					Familie f = new Familie(nr);
+					f.contruieste(vector.getVector(), v[1]);
+					int value = f.suma(v[1]);
+					heap.insert(f, value);
+				}
+				if(v[1].contains("g")) {
+					Grup g = new Grup(nr);
+					g.contruieste(vector.getVector(), v[1]);
+					int value = g.suma(v[1]);
+					heap.insert(g, value);
+				}
+				if(v[1].contains("s")) {
+					Singur s = new Singur(nr);
+					s.contruieste(vector.getVector(), v[1]);
+					int value = s.suma(v[1]);
+					heap.insert(s, value);
+				}
+			}
+			if(v[0].equals("list")) {
+				heap.sterge();
+				heap.list();
+				heap.setContor(1);
+			}
+			
+			if(v[0].equals("embark")) {
+				heap.sterge();
+				heap.embark();
+				heap.setContor(1);
+			}
+			
+			if(v[0].equals("delete")) {
+				Pasager p = heap.cauta(v[1]);
+				if(v.length == 3) {
+					heap.setName(v[2]);
+				}
+				heap.delete(p);
+				heap.setContor(1);
+			}
+			
+		}
+		br.close();
+	}
+}

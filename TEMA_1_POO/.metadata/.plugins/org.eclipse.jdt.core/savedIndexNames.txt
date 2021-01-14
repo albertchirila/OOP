@@ -1,0 +1,5 @@
+INDEX VERSION 1.131+C:\Users\Albert\Desktop\TEMA_1_POO\.metadata\.plugins\org.eclipse.jdt.core
+1725040058.index
+1259207542.index
+3580456661.index
+893496345.index

@@ -1,0 +1,69 @@
+import java.util.ArrayList;
+
+/** @author  Chirila Albert */
+public class Competition implements Clasament {
+	private String type;
+	private String gender;
+	private ArrayList<Team> teams;
+	
+	/** Constructor default */
+	public Competition() {}
+	
+	/**
+	 * Constructorul intializeaza campurile clasei
+	 * @param type tipul de echipa
+	 * @param gender genul persoanelor din echipa
+	 */
+	public Competition(String type, String gender) {
+		this.type = type;
+		this.gender = gender;
+		this.teams = new ArrayList<Team>();
+	}
+	
+	/**
+	 * Getter ce returneaza tipul echipei
+	 * @return tipul de echipa
+	 */
+	public String getType() {
+		return this.type;
+	}
+	
+	/**
+	 * Getter ce returneaza genul persoanelor din echipa
+	 * @return genul persoanelor din echipa
+	 */
+	public String getGender() {
+		return this.gender;
+	}
+	
+	/**
+	 * Getter ce returneaza lista de echpe dintr-o competitie
+	 * @return lista cu echipe dintr-o competitie
+	 */
+	public ArrayList<Team> getList(){
+		return this.teams;
+	}
+	
+	public void registerObserver(Team team) {
+		teams.add(team);
+	}
+	
+	/** Metoda gestioneaza fiecare meci si actualizeaza clasamentul */
+	public void notifyObserver() {
+		Visitor visitor = new TeamScore();
+		for(int i = 0; i < teams.size(); i++) {
+			Team team1 = teams.get(i);
+			for(int j = 0; j < teams.size(); j++) {
+				Team team2 = teams.get(j);
+				if(team1 == team2) continue;
+				if(teams.get(i).accept(visitor) > teams.get(j).accept(visitor)) {
+					teams.get(i).update(3);
+				}
+				else if(teams.get(i).accept(visitor) == teams.get(j).accept(visitor)) {
+					teams.get(i).update(1);
+					teams.get(j).update(1);
+				}
+			}
+		}
+	}
+}

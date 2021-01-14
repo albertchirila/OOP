@@ -1,0 +1,17 @@
+import java.io.IOException;
+
+/**
+ * Data: 08.11.2019
+ * Acest program simuleaza imbarcarea intr-un avion a pasagerilor in functie de prioritatea acestora.
+ * @author Chirila Albert
+ *
+ */
+public class MainClass {
+
+	public static void main(String[] args) throws IOException {
+		
+		ReadFile file = new ReadFile();
+		file.read();
+	}
+
+}

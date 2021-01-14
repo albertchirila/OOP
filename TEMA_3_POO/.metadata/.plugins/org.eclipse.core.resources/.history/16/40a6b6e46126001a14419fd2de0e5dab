@@ -1,0 +1,138 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Vector;
+
+/** @author Chirila Albert */
+public class ReadFile {
+	/**
+	 * Metoda citeste din fsierele de intrare si executa comenzile
+	 * @param args0 comanda
+	 * @param args1 primul fisier de intrare
+	 * @param args2 al doilea fisier de intrare
+	 * @param args3 fisierul de iesire
+	 * @throws IOException exceptie daca citirea nu reuseste
+	 */
+	public void read(String args0, String args1, String args2, String args3) throws IOException {	
+		if(args0.equals("inscriere") || args0.equals("competitie")) {
+			String input_file1 = args1;
+			String output_file = args3;
+			new FileOutputStream(output_file).close();
+			BufferedReader br1 = new BufferedReader(new FileReader(input_file1));
+			String line1;
+			
+			//initializari
+			Vector<Team> team_vector = new Vector<Team>(); //vector cu toate echipele
+			TeamFactory tf = TeamFactory.getInstance(); //singleton
+			
+			int index = 0; //contor pentru fiecare echipa
+			while((line1 = br1.readLine()) != null) {
+				String[] v = line1.split(", ");
+				int nr = Integer.parseInt(v[v.length - 1]); //numarul de jucatori
+				team_vector.add(tf.create(TeamType.valueOf(v[0]), v[1], v[2], nr));	// 'create' - factory
+				for(int i = 1; i <= nr; i++) {
+					line1 = br1.readLine();
+					String[] v1 = line1.split(", ");
+					Player player = new Player(v1[0], Integer.parseInt(v1[1]));
+					team_vector.get(index).getList().add(player);
+				}		
+				index++;
+			}
+			
+			if(args0.equals("competitie")) {
+				String input_file2 = args2;
+				BufferedReader br2 = new BufferedReader(new FileReader(input_file2));
+				String line2 = br2.readLine();
+				String[] v2 = line2.split(", ");
+				Competition competition = new Competition(v2[0], v2[1]);
+				while((line2 = br2.readLine()) != null) {
+					for(int i = 0; i < team_vector.size(); i++) {
+						if(line2.equals(team_vector.get(i).getTeamName()))
+							if(v2[0].equals(team_vector.get(i).getType()) && v2[1].equals(team_vector.get(i).getGender()))
+								competition.registerObserver(team_vector.get(i));
+					}
+				}
+				competition.notifyObserver();
+				clasament(competition.getList(), output_file);
+				br2.close();
+			}
+			else {
+				inscriere(team_vector, output_file);
+			}
+			br1.close();
+		}
+		
+	}
+	
+	/**
+	 * Metoda afiseaza echipele si jucatorii inscrisi in competitie
+	 * @param v vectorul de echipe
+	 * @param output_file fisierul de output
+	 * @throws IOException exceptie daca nu se poate scrie in fisier
+	 */
+	public void inscriere(Vector<Team> v, String output_file) throws IOException {
+		WriteFile write = new WriteFile();
+		for(int i = 0; i < v.size(); i++) {
+			write.write("{teamName: "+ v.get(i).getTeamName() + ", gender: " + v.get(i).getGender()
+					+ ", numberOfPlayers: " + v.get(i).getNumberOfPlayers() +
+					", players: [", output_file);
+			
+			ArrayList<Player> list = v.get(i).getList();
+			for(int j = 0; j < list.size(); j++) {
+				if(j == list.size() - 1) {
+					write.write("{name: " + list.get(j).getName() + ", score: " 
+							+ list.get(j).getScore() + "}]}" + "\n", output_file);
+				}
+				else {
+				write.write("{name: " + list.get(j).getName() + ", score: " 
+						+ list.get(j).getScore() + "}, ", output_file);	
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Metoda afiseaza clasamentul final
+	 * @param teams lista cu echipele dintr-o competitie
+	 * @param output_file  fisierul de output
+	 * @throws IOException exceptie daca nu se poate scrie in fisier
+	 */
+	public void clasament(ArrayList<Team> teams, String output_file) throws IOException {
+		WriteFile write = new WriteFile();
+		int position = 1;
+		ArrayList<Team> copie = new ArrayList<Team>();
+		
+		for(int i = 0; i < teams.size(); i++) {
+			copie.add(teams.get(i));
+		}
+		
+		while(copie.isEmpty() == false) {
+			int index = max_index(copie);
+			if(position <= 3)
+				write.write(copie.get(index).getTeamName() + "\n", output_file);
+			copie.get(index).setPosition(position);
+			position++;
+			copie.remove(index);
+		}
+		
+		for(int i = 0; i < teams.size(); i++) {
+			write.write("Echipa " + teams.get(i).getTeamName() + " a ocupat locul " + teams.get(i).getPosition() + "\n", output_file);
+		}
+	}
+	
+	/**
+	 * Metoda calculeaza pozitia pe care se afla echipa cu scorul cel mai mare
+	 * @param teams lista cu echipele dintr-o competitie
+	 * @return pozitia
+	 */
+	public int max_index(ArrayList<Team> teams) {
+		int maxim = 0, index = 0;
+		for(int i = 0; i < teams.size(); i++) {
+			if(teams.get(i).getPoints() > maxim) {
+				maxim = teams.get(i).getPoints();
+				index = i;
+			}
+		}	
+		return index;
+	}
+	
+}

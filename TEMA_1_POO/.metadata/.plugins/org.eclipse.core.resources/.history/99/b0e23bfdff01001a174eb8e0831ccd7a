@@ -1,0 +1,15 @@
+import java.io.IOException;
+
+/**
+ * @author Chirila Albert
+ *
+ */
+public class MainClass {
+
+	public static void main(String[] args) throws IOException {
+		
+		ReadFile file = new ReadFile();
+		file.read();
+	}
+
+}

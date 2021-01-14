@@ -1,0 +1,21 @@
+import java.io.IOException;
+
+/** @author Chirila Albert */
+public class MainClass {
+
+	/**
+	 * Ruleaza programul
+	 * @param args argumentele metodei main
+	 */
+	public static void main(String[] args) {
+		
+		ReadFile file = new ReadFile();
+		try {
+			file.read();
+		} catch (IOException e) {
+			System.out.println("Cannot read from file!");
+		}
+		
+	}
+
+}

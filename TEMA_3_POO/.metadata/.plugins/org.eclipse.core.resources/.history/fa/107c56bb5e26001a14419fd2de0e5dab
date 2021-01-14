@@ -1,0 +1,5 @@
+
+public interface Clasament {
+	public void removeObserver(Observer o);
+	public void notifyObserver(Observer o);
+}

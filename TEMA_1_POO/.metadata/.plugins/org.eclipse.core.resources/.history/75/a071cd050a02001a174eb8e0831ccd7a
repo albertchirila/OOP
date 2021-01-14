@@ -1,0 +1,49 @@
+/** @author Chirila Albert */
+public class Vector {
+	private Persoana[] v;
+	private int capacity;
+	
+	/** constructor de intializeaza campurile clasei */
+	public Vector(int value) {
+		this.capacity = value + 1;
+		this.v = new Persoana[this.capacity];
+	}
+	
+	/**
+	 * insereaza o persoana in vectorul v
+	 * @param p o persoana
+	 */
+	public void inserare(Persoana p) {
+		int i=0;
+		if(this.v[0] == null) {
+			this.v[i] = p;
+			return;
+		}
+		for(i=0; i<this.capacity; i++) {
+			if(this.v[i] == null) {
+				this.v[i] = p;
+				return;
+			}
+		}
+	}
+	
+	/** seteaza vectorul de persoane */
+	public void setVector(Persoana[] v) {
+		this.v = v;
+	}
+	
+	/** returneaza vectorul de persoane */
+	public Persoana[] getVector(){
+		return this.v;
+	}
+	
+	/** seteaza capacitatea vectorului */
+	public void setCapacity(int value) {
+		this.capacity = value;
+	}
+	
+	public int getCapacity() {
+		return this.capacity;
+	}
+	
+}
